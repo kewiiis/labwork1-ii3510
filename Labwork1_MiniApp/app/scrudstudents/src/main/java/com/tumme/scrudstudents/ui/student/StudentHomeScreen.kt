@@ -10,6 +10,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.tumme.scrudstudents.viewmodel.AuthViewModel
 import com.tumme.scrudstudents.viewmodel.StudentViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * Student home screen (dashboard).
@@ -102,8 +105,26 @@ fun StudentHomeScreen(
                 text = "Welcome, ${currentStudent?.firstName ?: "Student"}!",
                 style = MaterialTheme.typography.headlineMedium
             )
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Small greeting card with today's date and a friendly emoji
+            val today by remember { mutableStateOf(SimpleDateFormat("EEE, d MMM", Locale.getDefault()).format(Date())) }
+            OutlinedCard {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text("📅 Today", style = MaterialTheme.typography.labelLarge)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(today, style = MaterialTheme.typography.bodyMedium)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text("💡 Tip: Check your grades and stay on track.", style = MaterialTheme.typography.bodySmall)
+                }
+            }
+
             Spacer(modifier = Modifier.height(16.dp))
-            Text("Your level: ${currentStudent?.level?.value ?: "N/A"}")
+            Divider()
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Mini info line
+            Text("Level: ${currentStudent?.level?.value ?: "N/A"} • Keep it up ✨", style = MaterialTheme.typography.bodySmall)
         }
     }
 }

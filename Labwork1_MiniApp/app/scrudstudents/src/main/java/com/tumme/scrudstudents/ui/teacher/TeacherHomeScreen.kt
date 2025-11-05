@@ -9,6 +9,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.tumme.scrudstudents.viewmodel.AuthViewModel
 import com.tumme.scrudstudents.viewmodel.TeacherViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 /**
  * Teacher home screen (dashboard).
@@ -74,6 +77,28 @@ fun TeacherHomeScreen(
                 text = "Welcome, ${currentTeacher?.firstName ?: "Teacher"}!",
                 style = MaterialTheme.typography.headlineMedium
             )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Small greeting card with today's date and a friendly emoji
+            val today by remember { mutableStateOf(SimpleDateFormat("EEE, d MMM", Locale.getDefault()).format(Date())) }
+            OutlinedCard {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text("📅 Today", style = MaterialTheme.typography.labelLarge)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(today, style = MaterialTheme.typography.bodyMedium)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text("🎯 Tip: Check your courses for pending updates.", style = MaterialTheme.typography.bodySmall)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Divider()
+
+            Spacer(modifier = Modifier.height(16.dp))
+            // Mini info line
+            Text("Everything looks good. You're all set for today ✨", style = MaterialTheme.typography.bodySmall)
         }
     }
 }
